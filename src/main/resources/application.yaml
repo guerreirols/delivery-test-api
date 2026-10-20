@@ -1,3 +1,15 @@
 spring:
   application:
-    name: api
+    name: delivery-test
+
+  datasource:
+    url: jdbc:sqlite:delivery.db
+    driver-class-name: org.sqlite.JDBC
+
+  jpa:
+    database-platform: org.hibernate.community.dialect.SQLiteDialect
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
