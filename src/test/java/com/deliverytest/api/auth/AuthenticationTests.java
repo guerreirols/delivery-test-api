@@ -114,6 +114,9 @@ class AuthenticationTests {
         assertThat(decoder.decode(token).getSubject()).isEqualTo(users.findByEmail("maria@example.com").orElseThrow().getId());
         mvc.perform(get("/orders").header("Authorization", "Bearer " + token))
                 .andExpect(status().isOk());
+        mvc.perform(get("/users/me").header("Authorization", "Bearer " + token))
+                .andExpect(status().isOk()).andExpect(header().string("Cache-Control", "no-store"))
+                .andExpect(content().json("{\"name\":\"Maria\"}"));
     }
 
     @Test
@@ -125,6 +128,7 @@ class AuthenticationTests {
 
     @Test
     void anonymousCannotReadOrWriteOrdersOrAccessOtherRoutes() throws Exception {
+        mvc.perform(get("/users/me")).andExpect(status().isUnauthorized());
         mvc.perform(get("/orders")).andExpect(status().isUnauthorized())
                 .andExpect(header().string("WWW-Authenticate", "Bearer"))
                 .andExpect(jsonPath("$.status").value(401));
