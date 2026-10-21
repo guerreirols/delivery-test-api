@@ -4,6 +4,7 @@ import com.deliverytest.api.auth.exception.InvalidRefreshTokenException;
 import com.deliverytest.api.order.exception.InvalidOrderStatusException;
 import com.deliverytest.api.order.exception.OrderNotFoundException;
 import com.deliverytest.api.user.exception.EmailAlreadyRegisteredException;
+import com.deliverytest.api.user.exception.InvalidUserSessionException;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +28,14 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
     private final MessageSource messageSource;
+
+    @ExceptionHandler(InvalidUserSessionException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidUserSession(InvalidUserSessionException ex) {
+        log.debug("Consulta de perfil rejeitada: sessão de usuário inválida");
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .header(org.springframework.http.HttpHeaders.WWW_AUTHENTICATE, "Bearer")
+                .body(new ErrorResponse(401, message(ex.getMessage()), null));
+    }
 
     @ExceptionHandler(InvalidRefreshTokenException.class)
     public ResponseEntity<ErrorResponse> handleInvalidRefresh(InvalidRefreshTokenException ex) {

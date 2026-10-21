@@ -5,6 +5,7 @@ import com.deliverytest.api.order.entity.OrderStatus;
 import com.deliverytest.api.order.exception.InvalidOrderStatusException;
 import com.deliverytest.api.order.exception.OrderNotFoundException;
 import com.deliverytest.api.user.exception.EmailAlreadyRegisteredException;
+import com.deliverytest.api.user.exception.InvalidUserSessionException;
 import java.util.Locale;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,6 +33,7 @@ class GlobalExceptionHandlerTest {
         messages.addMessage("error.order.invalid-status-transition", Locale.ENGLISH, "Cannot change {0} to {1}");
         messages.addMessage("error.auth.email-already-registered", Locale.ENGLISH, "Email already registered");
         messages.addMessage("error.auth.invalid-credentials", Locale.ENGLISH, "Invalid credentials");
+        messages.addMessage("error.auth.unauthorized", Locale.ENGLISH, "Authentication required or invalid token");
         messages.addMessage("error.auth.invalid-refresh", Locale.ENGLISH, "Invalid refresh");
         messages.addMessage("error.validation", Locale.ENGLISH, "Invalid fields");
         messages.addMessage("error.request.malformed", Locale.ENGLISH, "Malformed request");
@@ -75,6 +77,15 @@ class GlobalExceptionHandlerTest {
 
         assertThat(response.getStatusCode().value()).isEqualTo(409);
         assertThat(response.getBody()).isEqualTo(new ErrorResponse(409, "Email already registered", null));
+    }
+
+    @Test
+    void invalidUserSessionReturnsUnauthorizedWithoutLoginMessage() {
+        ResponseEntity<ErrorResponse> response = handler.handleInvalidUserSession(new InvalidUserSessionException());
+
+        assertThat(response.getStatusCode().value()).isEqualTo(401);
+        assertThat(response.getHeaders().getFirst("WWW-Authenticate")).isEqualTo("Bearer");
+        assertThat(response.getBody()).isEqualTo(new ErrorResponse(401, "Authentication required or invalid token", null));
     }
 
     @Test

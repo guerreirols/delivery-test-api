@@ -1,10 +1,10 @@
 package com.deliverytest.api.user.service;
 
 import com.deliverytest.api.user.entity.User;
+import com.deliverytest.api.user.exception.InvalidUserSessionException;
 import com.deliverytest.api.user.repository.UserRepository;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
-import org.springframework.security.authentication.BadCredentialsException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -24,12 +24,14 @@ class UserProfileServiceTest {
     @Test
     void rejectsMissingUser() {
         when(users.findById("missing")).thenReturn(Optional.empty());
-        assertThatThrownBy(() -> profiles.findCurrent("missing")).isInstanceOf(BadCredentialsException.class);
+        assertThatThrownBy(() -> profiles.findCurrent("missing"))
+                .isInstanceOf(InvalidUserSessionException.class).hasMessage("error.auth.unauthorized");
     }
 
     @Test
     void rejectsDisabledUser() {
         when(users.findById("disabled")).thenReturn(Optional.of(User.builder().active(false).build()));
-        assertThatThrownBy(() -> profiles.findCurrent("disabled")).isInstanceOf(BadCredentialsException.class);
+        assertThatThrownBy(() -> profiles.findCurrent("disabled"))
+                .isInstanceOf(InvalidUserSessionException.class).hasMessage("error.auth.unauthorized");
     }
 }

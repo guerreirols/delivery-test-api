@@ -120,6 +120,29 @@ class AuthenticationTests {
     }
 
     @Test
+    void missingProfileUserReturnsSessionError() throws Exception {
+        mvc.perform(get("/users/me").header("Authorization", "Bearer "
+                        + token(Instant.now().plusSeconds(3600), AccessTokenService.ISSUER)))
+                .andExpect(status().isUnauthorized())
+                .andExpect(header().string("WWW-Authenticate", "Bearer"))
+                .andExpect(content().json("""
+                        {"status":401,"message":"Autenticação necessária ou token inválido"}
+                        """));
+    }
+
+    @Test
+    void disabledProfileUserReturnsSessionError() throws Exception {
+        users.save(User.builder().id("user-id").name("Disabled").email("disabled@example.com")
+                .password("unused").active(false).build());
+
+        mvc.perform(get("/users/me").header("Authorization", "Bearer "
+                        + token(Instant.now().plusSeconds(3600), AccessTokenService.ISSUER)))
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.status").value(401))
+                .andExpect(jsonPath("$.message").value("Autenticação necessária ou token inválido"));
+    }
+
+    @Test
     void wrongPasswordAndUnknownUserHaveSamePublicError() throws Exception {
         register("maria@example.com");
         String knownError = loginFailure("maria@example.com");
