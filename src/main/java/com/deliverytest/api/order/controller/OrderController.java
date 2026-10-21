@@ -1,8 +1,9 @@
-package com.deliverytest.api.order;
+package com.deliverytest.api.order.controller;
 
 import com.deliverytest.api.order.dto.OrderRequest;
 import com.deliverytest.api.order.dto.OrderResponse;
 import com.deliverytest.api.order.dto.OrderStatusUpdateRequest;
+import com.deliverytest.api.order.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;

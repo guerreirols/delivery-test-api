@@ -1,4 +1,4 @@
-package com.deliverytest.api.order;
+package com.deliverytest.api.order.entity;
 
 public enum OrderStatus {
     RECEBIDO,

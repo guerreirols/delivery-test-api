@@ -1,4 +1,4 @@
-package com.deliverytest.api.exception;
+package com.deliverytest.api.order.exception;
 
 public class OrderNotFoundException extends RuntimeException {
 

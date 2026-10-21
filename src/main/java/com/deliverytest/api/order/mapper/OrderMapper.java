@@ -1,12 +1,11 @@
 package com.deliverytest.api.order.mapper;
 
-import com.deliverytest.api.order.Order;
 import com.deliverytest.api.order.dto.OrderRequest;
 import com.deliverytest.api.order.dto.OrderResponse;
+import com.deliverytest.api.order.entity.Order;
+import java.util.ArrayList;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
 
 @Component
 @AllArgsConstructor

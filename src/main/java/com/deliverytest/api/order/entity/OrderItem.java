@@ -1,4 +1,4 @@
-package com.deliverytest.api.order;
+package com.deliverytest.api.order.entity;
 
 import de.huxhorn.sulky.ulid.ULID;
 import jakarta.persistence.Column;
@@ -9,13 +9,12 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
+import java.math.BigDecimal;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.math.BigDecimal;
 
 @Entity
 @Table(name = "order_items")

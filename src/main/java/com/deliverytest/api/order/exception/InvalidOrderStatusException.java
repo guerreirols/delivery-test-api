@@ -1,6 +1,6 @@
-package com.deliverytest.api.exception;
+package com.deliverytest.api.order.exception;
 
-import com.deliverytest.api.order.OrderStatus;
+import com.deliverytest.api.order.entity.OrderStatus;
 import lombok.Getter;
 
 @Getter

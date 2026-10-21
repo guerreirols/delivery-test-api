@@ -1,8 +1,7 @@
 package com.deliverytest.api.order.dto;
 
-import lombok.Builder;
-
 import java.math.BigDecimal;
+import lombok.Builder;
 
 @Builder
 public record OrderItemResponse(

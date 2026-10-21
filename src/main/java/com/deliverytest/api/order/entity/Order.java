@@ -1,6 +1,6 @@
-package com.deliverytest.api.order;
+package com.deliverytest.api.order.entity;
 
-import com.deliverytest.api.exception.InvalidOrderStatusException;
+import com.deliverytest.api.order.exception.InvalidOrderStatusException;
 import de.huxhorn.sulky.ulid.ULID;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -12,15 +12,14 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "orders")

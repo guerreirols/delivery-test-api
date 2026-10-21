@@ -1,10 +1,9 @@
 package com.deliverytest.api.order.dto;
 
-import com.deliverytest.api.order.OrderStatus;
-import lombok.Builder;
-
+import com.deliverytest.api.order.entity.OrderStatus;
 import java.time.LocalDateTime;
 import java.util.List;
+import lombok.Builder;
 
 @Builder
 public record OrderResponse(

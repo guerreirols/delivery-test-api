@@ -1,8 +1,8 @@
 package com.deliverytest.api.order.mapper;
 
-import com.deliverytest.api.order.OrderItem;
 import com.deliverytest.api.order.dto.OrderItemRequest;
 import com.deliverytest.api.order.dto.OrderItemResponse;
+import com.deliverytest.api.order.entity.OrderItem;
 import org.springframework.stereotype.Component;
 
 @Component
